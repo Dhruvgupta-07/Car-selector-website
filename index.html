@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Selector</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Find Your Perfect Car</h1>
+  </header>
+
+  <main>
+    <section id="car-form">
+      <h2>Tell us what you're looking for</h2>
+      <form id="selectorForm">
+        <label for="budget">Budget (in ₹):</label>
+        <input type="number" id="budget" name="budget" required />
+
+        <label for="company">Preferred Company:</label>
+        <input type="text" id="company" name="company" placeholder="e.g. Maruti, Hyundai, Tata" />
+
+        <label for="type">Car Type:</label>
+        <select id="type" name="type">
+          <option value="hatchback">Hatchback</option>
+          <option value="sedan">Sedan</option>
+          <option value="suv">SUV</option>
+          <option value="muv">MUV</option>
+          <option value="electric">Electric</option>
+        </select>
+
+        <label for="engine">Engine Preference:</label>
+        <select id="engine" name="engine">
+          <option value="small">Small (under 1200cc)</option>
+          <option value="medium">Medium (1200cc - 1600cc)</option>
+          <option value="large">Large (1600cc+)</option>
+        </select>
+
+        <label for="comfort">Comfort Level:</label>
+        <select id="comfort" name="comfort">
+          <option value="basic">Basic</option>
+          <option value="standard">Standard</option>
+          <option value="premium">Premium</option>
+        </select>
+
+        <label for="usage">Usage Type:</label>
+        <select id="usage" name="usage">
+          <option value="city">City</option>
+          <option value="highway">Highway</option>
+          <option value="offroad">Off-Road</option>
+          <option value="mixed">Mixed</option>
+        </select>
+
+        <label for="travellers">Number of Travellers:</label>
+        <input type="number" id="travellers" name="travellers" min="1" max="9" />
+
+        <label for="fuel">Fuel Type:</label>
+        <select id="fuel" name="fuel">
+          <option value="petrol">Petrol</option>
+          <option value="diesel">Diesel</option>
+          <option value="electric">Electric</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+
+        <button type="submit">Show Recommendations</button>
+      </form>
+    </section>
+
+    <section id="results">
+      <h2>Recommended Cars</h2>
+      <div id="carResults"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 CarSelector. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
