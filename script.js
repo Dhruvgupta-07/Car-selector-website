@@ -1,102 +1,95 @@
-// Sample car data (You can expand this list)
-const cars = [
+
+const carData = [
+  {
+    name: "Toyota Innova",
+    type: "SUV",
+    engine: "Petrol",
+    comfort: "High",
+    usage: "Family",
+    travellers: 7,
+    budget: "High",
+    company: "Toyota",
+    img: "https://imgd.aeplcdn.com/370x208/cw/ec/21483/Toyota-Innova-Crysta-Exterior-83507.jpg"
+  },
   {
     name: "Maruti Swift",
+    type: "Hatchback",
+    engine: "Petrol",
+    comfort: "Medium",
+    usage: "City",
+    travellers: 4,
+    budget: "Low",
     company: "Maruti",
-    type: "hatchback",
-    engine: "small",
-    comfort: "standard",
-    usage: "city",
-    travellers: 5,
-    fuel: "petrol",
-    price: 700000
+    img: "https://imgd.aeplcdn.com/370x208/cw/ec/39005/Maruti-Swift-Exterior-168441.jpg"
   },
   {
-    name: "Hyundai Verna",
+    name: "Hyundai Creta",
+    type: "SUV",
+    engine: "Diesel",
+    comfort: "High",
+    usage: "Family",
+    travellers: 5,
+    budget: "Medium",
     company: "Hyundai",
-    type: "sedan",
-    engine: "medium",
-    comfort: "premium",
-    usage: "highway",
-    travellers: 5,
-    fuel: "diesel",
-    price: 1300000
+    img: "https://imgd.aeplcdn.com/370x208/n/cw/ec/130763/creta-exterior-right-front-three-quarter.jpeg"
   },
   {
-    name: "Tata Nexon EV",
-    company: "Tata",
-    type: "suv",
-    engine: "medium",
-    comfort: "premium",
-    usage: "mixed",
+    name: "Honda City",
+    type: "Sedan",
+    engine: "Petrol",
+    comfort: "High",
+    usage: "City",
     travellers: 5,
-    fuel: "electric",
-    price: 1600000
-  },
-  {
-    name: "Toyota Fortuner",
-    company: "Toyota",
-    type: "suv",
-    engine: "large",
-    comfort: "premium",
-    usage: "offroad",
-    travellers: 7,
-    fuel: "diesel",
-    price: 3500000
+    budget: "Medium",
+    company: "Honda",
+    img: "https://imgd.aeplcdn.com/370x208/n/cw/ec/129765/city-exterior-right-front-three-quarter-2.jpeg"
   }
+  // Add more cars as needed...
 ];
 
-const form = document.getElementById("selectorForm");
-const resultsDiv = document.getElementById("carResults");
-
-form.addEventListener("submit", function (e) {
+document.getElementById("carForm").addEventListener("submit", function(e) {
   e.preventDefault();
+  const filters = {
+    type: type.value,
+    engine: engine.value,
+    comfort: comfort.value,
+    usage: usage.value,
+    travellers: parseInt(travellers.value),
+    budget: budget.value,
+    company: company.value
+  };
 
-  const budget = parseInt(form.budget.value);
-  const company = form.company.value.toLowerCase();
-  const type = form.type.value;
-  const engine = form.engine.value;
-  const comfort = form.comfort.value;
-  const usage = form.usage.value;
-  const travellers = parseInt(form.travellers.value);
-  const fuel = form.fuel.value;
+  const filteredCars = carData.filter(car =>
+    car.type === filters.type &&
+    car.engine === filters.engine &&
+    car.comfort === filters.comfort &&
+    car.usage === filters.usage &&
+    car.travellers === filters.travellers &&
+    car.budget === filters.budget &&
+    car.company === filters.company
+  );
 
-  const filteredCars = cars.filter(car => {
-    return (
-      car.price <= budget &&
-      (company === "" || car.company.toLowerCase().includes(company)) &&
-      car.type === type &&
-      car.engine === engine &&
-      car.comfort === comfort &&
-      car.usage === usage &&
-      car.travellers >= travellers &&
-      car.fuel === fuel
-    );
-  });
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = "";
 
-  displayResults(filteredCars);
-});
-
-function displayResults(cars) {
-  resultsDiv.innerHTML = "";
-  if (cars.length === 0) {
-    resultsDiv.innerHTML = "<p>No matching cars found.</p>";
-    return;
+  if (filteredCars.length === 0) {
+    resultDiv.innerHTML = "<p>No matching cars found.</p>";
+  } else {
+    filteredCars.forEach(car => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = \`
+        <img src="\${car.img}" alt="\${car.name}">
+        <h3>\${car.name}</h3>
+        <p><strong>Type:</strong> \${car.type}</p>
+        <p><strong>Engine:</strong> \${car.engine}</p>
+        <p><strong>Comfort:</strong> \${car.comfort}</p>
+        <p><strong>Usage:</strong> \${car.usage}</p>
+        <p><strong>Travellers:</strong> \${car.travellers}</p>
+        <p><strong>Budget:</strong> \${car.budget}</p>
+        <p><strong>Company:</strong> \${car.company}</p>
+      \`;
+      resultDiv.appendChild(card);
+    });
   }
-  cars.forEach(car => {
-    const carDiv = document.createElement("div");
-    carDiv.classList.add("car-card");
-    carDiv.innerHTML = `
-      <h3>${car.name}</h3>
-      <p>Company: ${car.company}</p>
-      <p>Type: ${car.type}</p>
-      <p>Fuel: ${car.fuel}</p>
-      <p>Engine: ${car.engine}</p>
-      <p>Comfort: ${car.comfort}</p>
-      <p>Usage: ${car.usage}</p>
-      <p>Seats: ${car.travellers}</p>
-      <p>Price: ₹${car.price.toLocaleString()}</p>
-    `;
-    resultsDiv.appendChild(carDiv);
-  });
-}
+});
